@@ -77,9 +77,9 @@ A high energy efficiency flow calculation(max and sum) circuit:
 
 ## Hspice design 
 ### Dirs
-- [hspice/library/](./hspice/library/): the component and testbench
+- [hspice/library/](./hspice/library/): the basic components and testbench
 - [hspice/src/](./hspice/src/): design source and testbench of MandS
-- [hspice/test/](./hspice/test/): results(netlist, waveforms...)
+- [hspice/test/](./hspice/test/): test results(netlists, waveforms...)
 
 ### Results
 为了确保电路在SS corner下容许的电源电压波动范围都不小于±10%，因此在SS corner下进行电压扫描，得到能够后级正确采样的临界电压V，把(V/90%)的值作为最终电压选择，部分结果如下:

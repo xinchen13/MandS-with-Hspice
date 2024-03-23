@@ -56,7 +56,7 @@ A high energy efficiency flow calculation(max and sum) circuit:
 
 ### Verification
 - create testbench [MandS_tb.v](./verilog/tb/MandS_tb.v) and python script [run_sim.py](./verilog/sim/run_sim.py) to run iverilog verification and check the waveform through GTKWave
-- run the verification by command: `python ./sim/run_sim.py MandS`
+- run the verification by command(`cd verilog/` first): `python ./sim/run_sim.py MandS`
 - the result is shown below:
 
 <img src="./figs/iverilog.png"/>

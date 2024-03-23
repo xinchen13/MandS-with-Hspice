@@ -1,5 +1,10 @@
 # MandS
-A high energy efficiency flow calculation circuit
+A high energy efficiency flow calculation circuit:
+
+- `verilog/`: Verilog design
+- `hspice/`: Hspice design
+- `readings/`: reading materials
+- `figs/`: pictures
 
 ## Background
 传感器信号的特征提取是很多物联网应用中的常用运算，传感器信号通常经过模数转换后变成数字序列，以串行的方式进入系统，其到达率一般等于模数转换器的采样率，由信号带宽和应用决定. 设计一款流数据的特征提取电路，该电路接收串行到达的数据流信号，能够计算接收到的全部信号的序列和与最大值，从序列中提取出需要的信息. 信号到达速率给定，要求该电路具有尽量高的能量效率——即处理一组数据所消耗的总能量最小化. 其中，需要考虑不同应用场景中传感器信号的采样率的差异和电路工作的鲁棒性(能够适应电压的波动范围)
@@ -63,11 +68,11 @@ A high energy efficiency flow calculation circuit
 
 8位数据的比较器: 若符号位不同，则输出符号位为0的数据；若符号位相同，通过8位全加器计算补码减法 a - b = a + ~b + 1，根据减法结果通过多路选择器来选择大值输出:
 
-<img src="./figs/comparator.png"  width="630" />
+<img src="./figs/comparator.png"/>
 
 最后，异步低电平复位的D触发器的实现（Hspice测得建立时间约22ps）:
 
-<img src="./figs/dff.png"  width="450" />
+<img src="./figs/dff.png"  width="420" />
 
 
 ## Hspice design 
@@ -87,7 +92,7 @@ A high energy efficiency flow calculation circuit
 
 TT corner下的典型波形(左: 320KHz典型波形   右:0.8GHz典型波形):
 
-<img src="./figs/wave.png"  width="600" />
+<img src="./figs/wave.png"/>
 
 
 

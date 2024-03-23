@@ -1,0 +1,4 @@
+$DATA1 SOURCE='HSPICE' VERSION='L-2016.06-SP2-2 linux64' PARAM_COUNT=0
+.TITLE 'stream feature extractor by group05'
+ avg_power        temper           alter#          
+ -7.678e-05         25.0000        9               

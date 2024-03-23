@@ -32,10 +32,29 @@ A high energy efficiency flow calculation circuit
 
 ## Design strategy
 本高能效流特征计算电路设计是基于HSPICE的全定制设计:
-- 设计初期，根据电路功能描述初步拟定电路结构，之后使用Verilog进行结构化建模，编写testbench利用iverilog与Vivado实现简单的逻辑功能验证
-- 以通过验证的电路为基础进行晶体管级描述，使用HSPICE实现自底向上的电路实现：先构建、验证基本的电路子模块，如反相器inv，传输门transgate以及二选一多路选择器mux21等；之后搭建MandS05顶层子电路，并编写testbench，完成网表的功能验证
-- 优化testbench，通过`.param`扫描两种时钟频率下的电源电压，完成对电路功耗的测量与优化
+设计初期，根据电路功能描述初步拟定电路结构，之后使用Verilog进行结构化建模，编写testbench利用iverilog与Vivado实现简单的逻辑功能验证
 
+以通过验证的电路为基础进行晶体管级描述，使用HSPICE实现自底向上的电路实现：先构建、验证基本的电路子模块，如反相器inv，传输门transgate以及二选一多路选择器mux21等；之后搭建MandS05顶层子电路，并编写testbench，完成网表的功能验证
+
+优化testbench，通过`.param`扫描两种时钟频率下的电源电压，完成对电路功耗的测量与优化
+
+- Max寄存器的默认值为置为8’b10000000，保证输入负数时正确的到最大值
+- 利用传输门实现MUX与DFF，降低了功耗
+- 采用串行进位加法器，满足时序，功耗低
+- 复用了加法器和MUX实现比较器，降低了功耗和复杂度
+
+## Verilog design 
+### Dirs
+- [verilog/rtl/](./verilog/rtl/): the structural modeling rtl code
+- [verilog/tb/](./verilog/tb/): testbench
+- [verilog/sim](./verilog/sim/): python script and waveform
+
+### Verification
+- create testbench [MandS_tb.v](./verilog/tb/MandS_tb.v) and python script [run_sim.py](./verilog/sim/run_sim.py) to run iverilog verification and check the waveform through GTKWave
+- run the verification by command: `python ./sim/run_sim.py MandS`
+- the result is shown below:
+
+<img src="./figs/iverilog.png"/>
 
 ## Architecture
 电路有两Sum与Max两条主要逻辑路径. u_comparator为8位数据比较器，u_adder为12位ripple-carry串行加法器，u_max_reg为保存Max结果的寄存器，u_sum_reg为保存Sum结果的寄存器，4个多路选择器实现控制信号. 顶层模块如下所示:
@@ -46,26 +65,29 @@ A high energy efficiency flow calculation circuit
 
 <img src="./figs/comparator.png"  width="630" />
 
-最后，异步低电平复位的D触发器的实现（测得建立时间约22ps）:
+最后，异步低电平复位的D触发器的实现（Hspice测得建立时间约22ps）:
 
 <img src="./figs/dff.png"  width="450" />
 
 
-## Verilog design 
-### RTL
-the structural modeling rtl code is located in [rtl](./verilog/rtl/)
-- `MandS.v`: top module
-- `asyn_dff.v`: DFF with asynchronous reset
-- `adder.v`: full adder unit 
-- `comparator`: comparator unit
-
-### Verification
-- create testbench [MandS_tb.v](./verilog/tb/MandS_tb.v) and python script [run_sim.py](./verilog/sim/run_sim.py) to run iverilog verification and check the waveform through GTKWave
-- run the verification by command: `python ./sim/run_sim.py MandS`
-- the result is shown below:
-
-<img src="./figs/iverilog.png"/>
-
 ## Hspice design 
+### Dirs
+- [hspice/library/](./hspice/library/): the component and testbench
+- [hspice/src/](./hspice/src/): design source and testbench of MandS
+- [hspice/test/](./hspice/test/): results(netlist, waveforms...)
+
+### Results
+为了确保电路在SS corner下容许的电源电压波动范围都不小于±10%，因此在SS corner下进行电压扫描，得到能够后级正确采样的临界电压V，把(V/90%)的值作为最终电压选择，部分结果如下:
+
+<img src="./figs/tab1.png"  width="600" />
+
+最终电源电压选择与在TT corner下的平均功耗、能量效率平均值:
+
+<img src="./figs/tab2.png"  width="600" />
+
+TT corner下的典型波形(左: 320KHz典型波形   右:0.8GHz典型波形):
+
+<img src="./figs/wave.png"  width="600" />
+
 
 

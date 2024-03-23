@@ -15,7 +15,7 @@ A high energy efficiency flow calculation(max and sum) circuit:
 
 实现流计算的晶体管级电路设计，功能单元(MandS)及典型的工作波形如下所示:
 
-<img src="./figs/unit.png"  width="600" />
+<img src="./figs/unit.png"  width="560" />
 
 在一个序列开始之前, 前级电路先输出一个`start`脉冲初始化MandS, 然后`valid`升高, 并同时开始输入数据, 当序列输入完毕(本例中序列长度为5, 实际中的序列长度任意，由`valid`信号的持续周期决定), `valid`信号下降. 当MandS后级电路采样到`valid`=0, 则知道结果数据已经就绪，就可以读取`Max`/`Sum`端口上的数值
 

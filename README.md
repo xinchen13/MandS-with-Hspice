@@ -1,5 +1,5 @@
 # MandS
-A high energy efficiency flow calculation circuit:
+A high energy efficiency flow calculation(max and sum) circuit:
 
 - `verilog/`: Verilog design
 - `hspice/`: Hspice design

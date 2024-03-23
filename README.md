@@ -44,11 +44,11 @@ A high energy efficiency flow calculation circuit
 
 8位数据的比较器: 若符号位不同，则输出符号位为0的数据；若符号位相同，通过8位全加器计算补码减法 a - b = a + ~b + 1，根据减法结果通过多路选择器来选择大值输出:
 
-<img src="./figs/comparator.png"  width="600" />
+<img src="./figs/comparator.png"  width="630" />
 
 最后，异步低电平复位的D触发器的实现（测得建立时间约22ps）:
 
-<img src="./figs/dff.png"  width="500" />
+<img src="./figs/dff.png"  width="450" />
 
 
 ## Verilog design 

@@ -40,7 +40,7 @@ A high energy efficiency flow calculation circuit
 ## Architecture
 电路有两Sum与Max两条主要逻辑路径. u_comparator为8位数据比较器，u_adder为12位ripple-carry串行加法器，u_max_reg为保存Max结果的寄存器，u_sum_reg为保存Sum结果的寄存器，4个多路选择器实现控制信号. 顶层模块如下所示:
 
-<img src="./figs/top.png"  width="600" />
+<img src="./figs/top.png"/>
 
 8位数据的比较器: 若符号位不同，则输出符号位为0的数据；若符号位相同，通过8位全加器计算补码减法 a - b = a + ~b + 1，根据减法结果通过多路选择器来选择大值输出:
 
@@ -48,7 +48,7 @@ A high energy efficiency flow calculation circuit
 
 最后，异步低电平复位的D触发器的实现（测得建立时间约22ps）:
 
-<img src="./figs/dff.png"  width="600" />
+<img src="./figs/dff.png"  width="500" />
 
 
 ## Verilog design 
@@ -64,7 +64,7 @@ the structural modeling rtl code is located in [rtl](./verilog/rtl/)
 - run the verification by command: `python ./sim/run_sim.py MandS`
 - the result is shown below:
 
-<img src="./figs/iverilog.png"  width="600" />
+<img src="./figs/iverilog.png"/>
 
 ## Hspice design 
 
